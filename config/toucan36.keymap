@@ -8,9 +8,11 @@
 #define ADJ  3
 
 &lt {
-    quick-tap-ms = <200>;
+    quick-tap-ms = <150>;
     hold-trigger-on-release;
 };
+
+&mt { hold-trigger-on-release; };
 
 / {
     conditional_layers {
