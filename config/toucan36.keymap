@@ -13,7 +13,10 @@
     hold-trigger-on-release;
 };
 
-&mt { hold-trigger-on-release; };
+&mt {
+    hold-trigger-on-release;
+    require-prior-idle-ms = <150>;
+};
 
 / {
     conditional_layers {
