@@ -1,6 +1,7 @@
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/pointing.h>
 
 #define BASE 0
 #define NAV  1
@@ -69,10 +70,10 @@
 
         SYS {
             bindings = <
-&trans          &trans        &trans        &trans        &trans          &trans      &kp LS(LG(N1))     &trans           &trans      &trans
-&bt BT_SEL 0    &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4    &kp K_PREV  &kp K_VOLUME_DOWN  &kp K_VOLUME_UP  &kp K_NEXT  &trans
-&studio_unlock  &reset        &trans        &trans        &trans          &trans      &kp K_PLAY_PAUSE   &kp K_MUTE       &trans      &trans
-                              &trans        &trans        &trans          &trans      &trans             &trans
+&trans          &trans        &trans        &trans        &trans          &msc SCRL_LEFT        &msc SCRL_UP       &msc SCRL_DOWN   &msc SCRL_RIGHT  &trans
+&bt BT_SEL 0    &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4    &kp K_PREV            &kp K_VOLUME_DOWN  &kp K_VOLUME_UP  &kp K_NEXT       &trans
+&studio_unlock  &reset        &trans        &trans        &trans          &trans                &kp K_PLAY_PAUSE   &kp K_MUTE       &trans           &trans
+                              &trans        &trans        &trans          &kp LG(LS(NUMBER_1))  &trans             &trans
             >;
         };
     };
