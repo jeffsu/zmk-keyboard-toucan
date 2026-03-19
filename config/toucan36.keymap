@@ -29,16 +29,27 @@
         };
     };
 
+    behaviors {
+        mt_hold: mt_hold {
+            compatible = "zmk,behavior-hold-tap";
+            label = "MT_HOLD";
+            bindings = <&kp>, <&kp>;
+
+            #binding-cells = <2>;
+            tapping-term-ms = <200>;
+        };
+    };
+
     keymap {
         compatible = "zmk,keymap";
 
         base {
             display-name = "BASE";
             bindings = <
-&kp Q  &kp W  &kp E        &kp R            &kp T           &kp Y                  &kp U        &kp I      &kp O    &kp P
-&kp A  &kp S  &kp D        &lt 1 F          &kp G           &kp H                  &kp J        &kp K      &kp L    &kp SEMI
-&kp Z  &kp X  &mt LALT C   &mt LCTRL V      &kp B           &kp N                  &mt LCTRL M  &kp COMMA  &kp DOT  &kp FSLH
-              &lt 4 MINUS  &lt 2 BACKSPACE  &mt LGUI RET    &mt LEFT_SHIFT ESCAPE  &lt 1 SPACE  &kp RALT
+&kp Q  &kp W  &kp E        &kp R            &kp T           &kp Y                       &kp U        &kp I      &kp O    &kp P
+&kp A  &kp S  &kp D        &lt 1 F          &kp G           &kp H                       &kp J        &kp K      &kp L    &kp SEMI
+&kp Z  &kp X  &mt LALT C   &mt LCTRL V      &kp B           &kp N                       &mt LCTRL M  &kp COMMA  &kp DOT  &kp FSLH
+              &lt 4 MINUS  &lt 2 BACKSPACE  &mt LGUI RET    &mt_hold LEFT_SHIFT ESCAPE  &lt 1 SPACE  &kp RALT
             >;
         };
 
