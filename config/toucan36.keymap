@@ -38,6 +38,13 @@
             #binding-cells = <2>;
             tapping-term-ms = <200>;
         };
+
+        underdash: underdash {
+            compatible = "zmk,behavior-tap-dance";
+            label = "UNDERDASH";
+            #binding-cells = <0>;
+            bindings = <&kp MINUS>, <&kp UNDER>;
+        };
     };
 
     keymap {
@@ -98,7 +105,7 @@
             bindings = <
 &trans  &trans  &trans  &trans  &trans    &trans    &kp LG(LS(N5))  &trans  &trans     &trans
 &trans  &trans  &trans  &trans  &trans    &kp LEFT  &kp DOWN        &kp UP  &kp RIGHT  &trans
-&trans  &trans  &trans  &trans  &trans    &trans    &trans          &trans  &trans     &trans
+&trans  &trans  &trans  &trans  &trans    &trans    &underdash      &trans  &trans     &trans
                 &trans  &trans  &trans    &trans    &kp TAB         &trans
             >;
 
