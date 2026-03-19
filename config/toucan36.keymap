@@ -45,6 +45,20 @@
             #binding-cells = <0>;
             bindings = <&kp MINUS>, <&kp UNDER>;
         };
+
+        quote: quote {
+            compatible = "zmk,behavior-tap-dance";
+            label = "QUOTE";
+            #binding-cells = <0>;
+            bindings = <&kp SINGLE_QUOTE>, <&kp DOUBLE_QUOTES>;
+        };
+
+        gravetick: gravetick {
+            compatible = "zmk,behavior-tap-dance";
+            label = "GRAVETICK";
+            #binding-cells = <0>;
+            bindings = <&kp GRAVE>, <&kp TILDE>;
+        };
     };
 
     keymap {
@@ -103,9 +117,9 @@
 
         quick {
             bindings = <
-&trans  &trans  &trans  &trans  &trans    &trans    &kp LG(LS(N5))  &trans  &trans     &trans
-&trans  &trans  &trans  &trans  &trans    &kp LEFT  &kp DOWN        &kp UP  &kp RIGHT  &trans
-&trans  &trans  &trans  &trans  &trans    &trans    &underdash      &trans  &trans     &trans
+&trans  &trans  &trans  &trans  &trans    &trans    &kp LG(LS(N5))  &trans  &trans      &trans
+&trans  &trans  &trans  &trans  &trans    &kp LEFT  &kp DOWN        &kp UP  &kp RIGHT   &trans
+&trans  &trans  &trans  &trans  &trans    &trans    &underdash      &quote  &gravetick  &trans
                 &trans  &trans  &trans    &trans    &kp TAB         &trans
             >;
 
