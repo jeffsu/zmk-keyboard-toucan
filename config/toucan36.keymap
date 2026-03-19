@@ -9,13 +9,14 @@
 #define ADJ  3
 
 &lt {
-    quick-tap-ms = <180>;
+    quick-tap-ms = <200>;
     hold-trigger-on-release;
 };
 
 &mt {
     hold-trigger-on-release;
-    require-prior-idle-ms = <180>;
+    require-prior-idle-ms = <200>;
+    flavor = "tap-preferred";
 };
 
 / {
