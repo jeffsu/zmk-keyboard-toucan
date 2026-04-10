@@ -138,13 +138,13 @@
 
         quick {
             bindings = <
-&trans  &trans  &trans  &trans  &trans    &trans    &kp LG(LS(N5))  &kp LA(A)  &trans      &trans
-&trans  &trans  &trans  &trans  &trans    &kp LEFT  &kp DOWN        &kp UP     &kp RIGHT   &trans
-&trans  &trans  &trans  &trans  &trans    &trans    &underdash      &quote     &gravetick  &trans
+&trans  &trans  &trans  &trans  &trans    &trans    &kp LG(LS(N5))  &kp LA(A)  &trans     &trans
+&trans  &trans  &trans  &trans  &trans    &kp LEFT  &kp DOWN        &kp UP     &kp RIGHT  &trans
+&trans  &trans  &trans  &trans  &trans    &trans    &kp MINUS       &kp UNDER  &trans     &trans
                 &trans  &trans  &trans    &trans    &kp TAB         &trans
             >;
 
-            label = "QUICK";
+            label = "Q";
         };
     };
 };
