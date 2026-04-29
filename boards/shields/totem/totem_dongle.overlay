@@ -1,1 +1,16 @@
 #include "totem.dtsi"
+
+// The dongle has no keys, but ZMK's physical-layout code path requires a
+// kscan device. Provide an inert kscan-composite with no children so
+// nothing is ever scanned.
+/ {
+    chosen {
+        zmk,kscan = &kscan_dongle;
+    };
+
+    kscan_dongle: kscan_dongle {
+        compatible = "zmk,kscan-composite";
+        rows = <4>;
+        columns = <10>;
+    };
+};
