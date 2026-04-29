@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# Keep config/totem.keymap in sync with config/toucan36.keymap.
+# If toucan36.keymap is staged, mirror it to totem.keymap and stage it too.
+set -euo pipefail
+
+repo_root="$(git rev-parse --show-toplevel)"
+src="$repo_root/config/toucan36.keymap"
+dst="$repo_root/config/totem.keymap"
+
+# Only sync when toucan36.keymap is part of this commit.
+if ! git diff --cached --name-only -- 'config/toucan36.keymap' | grep -qx 'config/toucan36.keymap'; then
+    exit 0
+fi
+
+if [ ! -f "$src" ]; then
+    echo "pre-commit: $src missing; skipping totem sync." >&2
+    exit 0
+fi
+
+cp "$src" "$dst"
+git add "$dst"
+echo "pre-commit: synced config/toucan36.keymap -> config/totem.keymap"

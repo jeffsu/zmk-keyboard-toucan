@@ -1,0 +1,150 @@
+#include <behaviors.dtsi>
+#include <dt-bindings/zmk/bt.h>
+#include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/pointing.h>
+
+#define BASE 0
+#define NAV  1
+#define SYM  2
+#define ADJ  3
+
+&lt {
+    quick-tap-ms = <200>;
+    hold-trigger-on-release;
+};
+
+&mt {
+    hold-trigger-on-release;
+    require-prior-idle-ms = <200>;
+    flavor = "tap-preferred";
+};
+
+/ {
+    conditional_layers {
+        compatible = "zmk,conditional-layers";
+
+        tri_layer {
+            if-layers = <1 2>;
+            then-layer = <3>;
+        };
+    };
+
+    behaviors {
+        mt_hold: mt_hold {
+            compatible = "zmk,behavior-hold-tap";
+            label = "MT_HOLD";
+            bindings = <&kp>, <&kp>;
+
+            #binding-cells = <2>;
+            tapping-term-ms = <200>;
+        };
+
+        underdash: underdash {
+            compatible = "zmk,behavior-tap-dance";
+            label = "UNDERDASH";
+            #binding-cells = <0>;
+            bindings = <&kp MINUS>, <&kp UNDER>;
+        };
+
+        quote: quote {
+            compatible = "zmk,behavior-tap-dance";
+            label = "QUOTE";
+            #binding-cells = <0>;
+            bindings = <&kp SINGLE_QUOTE>, <&kp DOUBLE_QUOTES>;
+        };
+
+        gravetick: gravetick {
+            compatible = "zmk,behavior-tap-dance";
+            label = "GRAVETICK";
+            #binding-cells = <0>;
+            bindings = <&kp GRAVE>, <&kp TILDE>;
+        };
+
+        left_bracket: left_bracket {
+            compatible = "zmk,behavior-tap-dance";
+            label = "LEFT_BRACKET";
+            #binding-cells = <0>;
+            bindings = <&kp LEFT_BRACKET>, <&kp LEFT_BRACE>;
+        };
+
+        right_bracket: right_bracket {
+            compatible = "zmk,behavior-tap-dance";
+            label = "RIGHT_BRACKET";
+            #binding-cells = <0>;
+            bindings = <&kp RIGHT_BRACKET>, <&kp RIGHT_BRACE>;
+        };
+
+        backslash_pipe: backslash_pipe {
+            compatible = "zmk,behavior-tap-dance";
+            label = "BACKSLASH_PIPE";
+            #binding-cells = <0>;
+            bindings = <&kp BACKSLASH>, <&kp PIPE>;
+        };
+    };
+
+    keymap {
+        compatible = "zmk,keymap";
+
+        base {
+            display-name = "BASE";
+            bindings = <
+&kp Q  &kp W  &kp E        &kp R            &kp T           &kp Y                       &kp U        &kp I      &kp O    &kp P
+&kp A  &kp S  &kp D        &lt 5 F          &kp G           &kp H                       &kp J        &kp K      &kp L    &kp SEMI
+&kp Z  &kp X  &mt LALT C   &mt LCTRL V      &kp B           &kp N                       &mt LCTRL M  &kp COMMA  &kp DOT  &kp FSLH
+              &lt 4 MINUS  &lt 2 BACKSPACE  &mt LGUI RET    &mt_hold LEFT_SHIFT ESCAPE  &lt 1 SPACE  &kp RALT
+            >;
+        };
+
+        num {
+            display-name = "NUM";
+            bindings = <
+&trans  &trans  &trans  &trans  &trans    &trans     &trans            &trans   &trans     &trans
+&kp N1  &kp N2  &kp N3  &kp N4  &kp N5    &kp N6     &kp N7            &kp N8   &kp N9     &kp N0
+&trans  &trans  &trans  &trans  &trans    &kp TILDE  &kp SINGLE_QUOTE  &kp DQT  &kp GRAVE  &kp PIPE
+                &trans  &trans  &trans    &trans     &trans            &trans
+            >;
+        };
+
+        sym {
+            display-name = "SYM";
+            bindings = <
+&trans    &trans  &trans     &trans      &trans         &trans     &kp LEFT_BRACKET  &kp RIGHT_BRACKET  &kp LEFT_BRACE        &kp RIGHT_BRACE
+&kp EXCL  &kp AT  &kp POUND  &kp DOLLAR  &kp PERCENT    &kp CARET  &kp AMPS          &kp ASTERISK       &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS
+&trans    &trans  &trans     &trans      &trans         &kp UNDER  &kp EQUAL         &kp PLUS           &trans                &kp BACKSLASH
+                  &trans     &trans      &trans         &trans     &trans            &trans
+            >;
+        };
+
+        adj {
+            display-name = "ADJ";
+            bindings = <
+&trans  &kp F7  &kp F8  &kp F9  &kp F12    &trans  &kp LS(LG(NUMBER_1))  &trans        &trans  &trans
+&trans  &kp F4  &kp F5  &kp F6  &kp F11    &trans  &kp LG(MINUS)         &kp LG(PLUS)  &trans  &trans
+&trans  &kp F1  &kp F2  &kp F3  &kp F10    &trans  &trans                &trans        &trans  &trans
+                &trans  &trans  &trans     &trans  &trans                &trans
+            >;
+        };
+
+        sys {
+            bindings = <
+&bt BT_CLR      &trans        &trans        &trans        &trans          &msc SCRL_LEFT  &msc SCRL_UP       &msc SCRL_DOWN   &msc SCRL_RIGHT  &trans
+&bt BT_SEL 0    &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4    &kp K_PREV      &kp K_VOLUME_DOWN  &kp K_VOLUME_UP  &kp K_NEXT       &trans
+&studio_unlock  &bootloader   &trans        &trans        &trans          &trans          &kp K_PLAY_PAUSE   &kp K_MUTE       &trans           &trans
+                              &trans        &trans        &trans          &trans          &trans             &trans
+            >;
+
+            label = "SYS";
+        };
+
+        quick {
+            bindings = <
+&trans  &trans  &trans  &trans  &trans    &trans    &kp LG(LS(N5))  &kp LA(A)  &trans     &trans
+&trans  &trans  &trans  &trans  &trans    &kp LEFT  &kp DOWN        &kp UP     &kp RIGHT  &trans
+&trans  &trans  &trans  &trans  &trans    &trans    &kp MINUS       &kp UNDER  &trans     &trans
+                &trans  &trans  &trans    &trans    &kp TAB         &trans
+            >;
+
+            label = "Q";
+        };
+    };
+};

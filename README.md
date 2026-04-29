@@ -1,6 +1,11 @@
-# ZMK config for beekeeb Toucan Keyboard
+# ZMK config for beekeeb Toucan & GEIST Totem
 
-[The beekeeb Toucan Keyboard](https://beekeeb.com/toucan-keyboard/) is a wireless split keyboard with a display and a trackpad, with an aggressive stagger on the pinky columns.
+This repo builds firmware for two keyboards from a shared keymap:
+
+- **Toucan** (main branch) — [beekeeb Toucan](https://beekeeb.com/toucan-keyboard/), wireless split with display + trackpad.
+- **Totem** (`totem` branch) — [GEIST TOTEM](https://github.com/GEIGEIGEIST/TOTEM) (38-key column-staggered split, XIAO BLE per side) paired with a [beekeeb Prospector](https://shop.beekeeb.com/products/zmk-wireless-dongle-prospector-diy-kit) dongle as the central. The two outer-pinky `SW16` keys are intentionally unmapped so the layout matches Toucan's 36 keys.
+
+The Toucan keymap (`config/toucan36.keymap`) is the source of truth. `config/totem.keymap` is auto-synced from it via a pre-commit hook (see [Keymap sync](#keymap-sync) below).
 
 ## Layout
 
@@ -37,6 +42,28 @@ In a ZMK split keyboard the keymap is stored exclusively on the central (left) h
 2. Flash `toucan36_right` to the right half.
 3. Flash `toucan36_left` to the left half.
 4. The two halves will pair automatically over BLE within a few seconds.
+
+## Totem build artifacts (totem branch)
+
+| Artifact | Description |
+|---|---|
+| `totem_dongle` | Prospector dongle firmware (central; holds keymap + LCD) |
+| `totem_left` | Left half firmware (peripheral, key scanning only) |
+| `totem_right` | Right half firmware (peripheral, key scanning only) |
+
+Pair the dongle with the left half first, then the right half (left-to-right pairing order is what the Prospector battery widget uses).
+
+## Keymap sync
+
+`config/totem.keymap` mirrors `config/toucan36.keymap` exactly. Don't edit `totem.keymap` directly — edits go in `toucan36.keymap` and a pre-commit hook copies the file over and stages it on commit.
+
+After cloning the repo, run once:
+
+```sh
+git config core.hooksPath .githooks
+```
+
+This points git at the in-repo hook (`.githooks/pre-commit`) which performs the sync.
 
 # License
 
