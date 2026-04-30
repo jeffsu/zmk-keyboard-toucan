@@ -5,7 +5,7 @@ This repo builds firmware for two keyboards from a shared keymap:
 - **Toucan** (main branch) — [beekeeb Toucan](https://beekeeb.com/toucan-keyboard/), wireless split with display + trackpad.
 - **Totem** (`totem` branch) — [GEIST TOTEM](https://github.com/GEIGEIGEIST/TOTEM) (38-key column-staggered split, XIAO BLE per side) paired with a [beekeeb Prospector](https://shop.beekeeb.com/products/zmk-wireless-dongle-prospector-diy-kit) dongle as the central. The two outer-pinky `SW16` keys are intentionally unmapped so the layout matches Toucan's 36 keys.
 
-The Toucan keymap (`config/toucan36.keymap`) is the source of truth. `config/totem.keymap` is auto-synced from it via a pre-commit hook (see [Keymap sync](#keymap-sync) below).
+The Toucan keymap (`config/toucan36.keymap`) is the only keymap in `config/` and the single source of truth — including for the Totem build. The keymap editor (and any tool that scans `config/`) sees only `toucan36`. See [Keymap sharing](#keymap-sharing) below.
 
 ## Layout
 
@@ -53,17 +53,20 @@ In a ZMK split keyboard the keymap is stored exclusively on the central (left) h
 
 Pair the dongle with the left half first, then the right half (left-to-right pairing order is what the Prospector battery widget uses).
 
-## Keymap sync
+## Keymap sharing
 
-`config/totem.keymap` mirrors `config/toucan36.keymap` exactly. Don't edit `totem.keymap` directly — edits go in `toucan36.keymap` and a pre-commit hook copies the file over and stages it on commit.
+`config/toucan36.keymap` is the only keymap file in `config/`. The totem build picks it up at compile time via a one-line shim:
 
-After cloning the repo, run once:
-
-```sh
-git config core.hooksPath .githooks
+```c
+// boards/shields/totem/totem.keymap
+#include "../../../config/toucan36.keymap"
 ```
 
-This points git at the in-repo hook (`.githooks/pre-commit`) which performs the sync.
+So:
+
+- The keymap editor (and any tool that scans `config/`) sees only `toucan36`.
+- `git push` triggers the GitHub Actions build, which compiles totem firmware from the same source via the shim — no copy step, no pre-commit hook, nothing to install after `git clone`.
+- Totem's matrix transform omits the two outer-pinky `SW16` positions, so they remain empty regardless of what the keymap contains. Whatever you bind in `toucan36.keymap` lands on the 36 shared positions; SW16 stays unmapped.
 
 # License
 
