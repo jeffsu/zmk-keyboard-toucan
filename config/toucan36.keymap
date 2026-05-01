@@ -53,7 +53,7 @@
             compatible = "zmk,behavior-tap-dance";
             label = "U_RAYCAST";
             #binding-cells = <0>;
-            bindings = <&kp U>, <&kp LG(SPACE)>;
+            bindings = <&kp U>, <&kp LA(SPACE)>;
 
             tapping-term-ms = <180>;
         };
