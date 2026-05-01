@@ -4,13 +4,19 @@
 #include <dt-bindings/zmk/pointing.h>
 
 #if IS_ENABLED(CONFIG_ZMK_STUDIO)
-
 #define STUDIO_UNLOCK &studio_unlock
-
 #else
-
 #define STUDIO_UNLOCK &trans
+#endif
 
+// The totem build defines SW16_LEFT / SW16_RIGHT to &none so its bottom
+// alpha row carries the two extra outer-pinky keys. Toucan leaves them
+// empty so the bottom row stays at 10 bindings.
+#ifndef SW16_LEFT
+#define SW16_LEFT
+#endif
+#ifndef SW16_RIGHT
+#define SW16_RIGHT
 #endif
 
 #define BASE 0
@@ -67,7 +73,7 @@
             bindings = <
 &kp Q  &kp W  &kp E        &kp R            &kp T           &kp Y                       &u_raycast   &kp I      &kp O    &kp P
 &kp A  &kp S  &kp D        &lt 5 F          &kp G           &kp H                       &kp J        &kp K      &kp L    &kp SEMI
-&kp Z  &kp X  &mt LALT C   &mt LCTRL V      &kp B           &kp N                       &mt LCTRL M  &kp COMMA  &kp DOT  &kp FSLH
+SW16_LEFT &kp Z  &kp X  &mt LALT C  &mt LCTRL V  &kp B  &kp N  &mt LCTRL M  &kp COMMA  &kp DOT  &kp FSLH SW16_RIGHT
               &lt 4 MINUS  &lt 2 BACKSPACE  &mt LGUI RET    &mt_hold LEFT_SHIFT ESCAPE  &lt 1 SPACE  &kp RALT
             >;
         };
@@ -77,7 +83,7 @@
             bindings = <
 &trans  &trans  &trans  &trans  &trans    &trans     &trans            &trans   &trans     &trans
 &kp N1  &kp N2  &kp N3  &kp N4  &kp N5    &kp N6     &kp N7            &kp N8   &kp N9     &kp N0
-&trans  &trans  &trans  &trans  &trans    &kp TILDE  &kp SINGLE_QUOTE  &kp DQT  &kp GRAVE  &kp PIPE
+SW16_LEFT &trans  &trans  &trans  &trans  &trans  &kp TILDE  &kp SINGLE_QUOTE  &kp DQT  &kp GRAVE  &kp PIPE SW16_RIGHT
                 &trans  &trans  &trans    &trans     &trans            &trans
             >;
         };
@@ -87,7 +93,7 @@
             bindings = <
 &trans    &trans  &trans     &trans      &trans         &trans     &kp LEFT_BRACKET  &kp RIGHT_BRACKET  &kp LEFT_BRACE        &kp RIGHT_BRACE
 &kp EXCL  &kp AT  &kp POUND  &kp DOLLAR  &kp PERCENT    &kp CARET  &kp AMPS          &kp ASTERISK       &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS
-&trans    &trans  &trans     &trans      &trans         &kp UNDER  &kp EQUAL         &kp PLUS           &trans                &kp BACKSLASH
+SW16_LEFT &trans  &trans  &trans  &trans  &trans  &kp UNDER  &kp EQUAL  &kp PLUS  &trans  &kp BACKSLASH SW16_RIGHT
                   &trans     &trans      &trans         &trans     &trans            &trans
             >;
         };
@@ -97,17 +103,17 @@
             bindings = <
 &trans  &kp F7  &kp F8  &kp F9  &kp F12    &trans  &kp LS(LG(NUMBER_1))  &trans        &trans  &trans
 &trans  &kp F4  &kp F5  &kp F6  &kp F11    &trans  &kp LG(MINUS)         &kp LG(PLUS)  &trans  &trans
-&trans  &kp F1  &kp F2  &kp F3  &kp F10    &trans  &trans                &trans        &trans  &trans
+SW16_LEFT &trans  &kp F1  &kp F2  &kp F3  &kp F10  &trans  &trans  &trans  &trans  &trans SW16_RIGHT
                 &trans  &trans  &trans     &trans  &trans                &trans
             >;
         };
 
         sys {
             bindings = <
-&bt BT_CLR    &trans        &trans        &trans        &trans          &msc SCRL_LEFT    &msc SCRL_UP       &msc SCRL_DOWN   &msc SCRL_RIGHT  &trans
-&bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4    &kp K_PREV        &kp K_VOLUME_DOWN  &kp K_VOLUME_UP  &kp K_NEXT       &trans STUDIO_UNLOCK
-&bootloader   &trans        &trans        &trans        &trans          &kp K_PLAY_PAUSE  &kp K_MUTE         &trans           &trans           &trans
-                            &trans        &trans        &trans          &trans            &trans
+&bt BT_CLR      &trans        &trans        &trans        &trans          &msc SCRL_LEFT  &msc SCRL_UP       &msc SCRL_DOWN   &msc SCRL_RIGHT  &trans
+&bt BT_SEL 0    &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4    &kp K_PREV      &kp K_VOLUME_DOWN  &kp K_VOLUME_UP  &kp K_NEXT       &trans
+SW16_LEFT STUDIO_UNLOCK  &bootloader  &trans  &trans  &trans  &trans  &kp K_PLAY_PAUSE  &kp K_MUTE  &trans  &trans SW16_RIGHT
+                              &trans        &trans        &trans          &trans          &trans             &trans
             >;
 
             label = "SYS";
@@ -117,7 +123,7 @@
             bindings = <
 &trans  &trans  &trans  &trans  &trans    &trans    &kp LG(LS(N5))  &kp LA(A)  &trans     &trans
 &trans  &trans  &trans  &trans  &trans    &kp LEFT  &kp DOWN        &kp UP     &kp RIGHT  &trans
-&trans  &trans  &trans  &trans  &trans    &trans    &kp MINUS       &kp UNDER  &trans     &trans
+SW16_LEFT &trans  &trans  &trans  &trans  &trans  &trans  &kp MINUS  &kp UNDER  &trans  &trans SW16_RIGHT
                 &trans  &trans  &trans    &trans    &kp TAB         &trans
             >;
 

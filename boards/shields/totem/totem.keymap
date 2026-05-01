@@ -1,6 +1,9 @@
-// The totem keymap is the toucan keymap. The shared file lives in config/
-// so the keymap editor edits one source of truth (toucan36.keymap); on push,
-// CI uses the include below to build totem firmware from it. The two outer
-// pinky SW16 keys are absent from totem's matrix transform, so they remain
-// empty on the totem build no matter what the keymap says.
+/*
+ * The totem keymap is the toucan keymap with two extra "outer pinky" SW16
+ * keys filled in as &none. We define those macros here, then include the
+ * single source of truth from config/. Editor only sees toucan; firmware
+ * gets a 38-binding keymap that matches upstream's totem matrix transform.
+ */
+#define SW16_LEFT  &none
+#define SW16_RIGHT &none
 #include "../../../config/toucan36.keymap"

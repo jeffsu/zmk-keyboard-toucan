@@ -1,16 +1,10 @@
 #include "totem.dtsi"
 
-// The dongle has no keys, but ZMK's physical-layout code path requires a
-// kscan device. Provide an inert kscan-composite with no children so
-// nothing is ever scanned.
-/ {
-    chosen {
-        zmk,kscan = &kscan_dongle;
-    };
-
-    kscan_dongle: kscan_dongle {
-        compatible = "zmk,kscan-composite";
-        rows = <4>;
-        columns = <10>;
-    };
+/*
+ * The dongle is the central; it has no keys. We override the chosen kscan to
+ * none and disable kscan0 so the central doesn't try to scan anything itself
+ * — peripherals send position events to it over BLE.
+ */
+&kscan0 {
+    status = "disabled";
 };
