@@ -1,10 +1,20 @@
 #include "totem.dtsi"
 
 /*
- * The dongle is the central; it has no keys. We override the chosen kscan to
- * none and disable kscan0 so the central doesn't try to scan anything itself
- * — peripherals send position events to it over BLE.
+ * The dongle is the central; it has no keys. ZMK still references
+ * DT_CHOSEN(zmk_kscan), so swap kscan0 for an inert kscan-composite
+ * that has no children and never reports any events.
  */
-&kscan0 {
-    status = "disabled";
+/delete-node/ &kscan0;
+
+/ {
+    chosen {
+        zmk,kscan = &kscan_dongle;
+    };
+
+    kscan_dongle: kscan_dongle {
+        compatible = "zmk,kscan-composite";
+        rows = <4>;
+        columns = <10>;
+    };
 };
